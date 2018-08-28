@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+import rospy
+from std_msgs.msg import Int64
+from std_msgs.msg import Float64
+from math import sin, cos
+_PreviousLeftEncoderCounts = long(0)
+_PreviousRightEncoderCounts = long(0)
+current_time = rospy.Time()
+last_time = rospy.Time()
+DistancePerCount = (2 * 3.14159265 * 0.05) / 768  # (2*PI*r)/ppr
+deltaLeft = 0.0
+v_left=0.0
+def fcn(msg):
+    global _PreviousLeftEncoderCounts, last_time
+    current_time = rospy.Time.now()
+    deltaLeft = msg.data -  _PreviousLeftEncoderCounts
+    dt = (current_time - last_time).to_sec()
+    v_left = (deltaLeft * DistancePerCount) / dt
+    pub.publish(v_left)
+    _PreviousLeftEncoderCounts = msg.data
+    last_time = current_time
+
+
+if __name__ == '__main__':
+    rospy.init_node('ticks_to_motor_vel', anonymous=True)
+    rospy.Subscriber("/l_f_wheel", Int64, fcn)
+    pub = rospy.Publisher('/l_f_wheel_vel', Float64,queue_size=10)
+    rate = rospy.Rate(30)
+    rate.sleep()
+    rospy.spin()
+    

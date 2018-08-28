@@ -1,0 +1,74 @@
+<launch>
+<node name="l_front_motor_cmd" pkg="target_motor" type="left_front_node.py" output="screen">
+      <remap from="lwheel" to="l_f_wheel"/>
+      <remap from="left_wheel_cmd" to="l_f_wheel_cmd"/>
+      <rosparam param="port">/dev/ttyACM2</rosparam>
+ </node>
+<node name="l_back_motor_cmd" pkg="target_motor" type="left_front_node.py" output="screen">
+      <remap from="lwheel" to="l_b_wheel"/>
+      <remap from="left_wheel_cmd" to="l_b_wheel_cmd"/>
+      <rosparam param="port">/dev/ttyUSB0</rosparam>
+ </node>
+ <node name="r_front_motor_cmd" pkg="target_motor" type="left_front_node.py" output="screen">
+      <remap from="lwheel" to="r_f_wheel"/>
+      <remap from="left_wheel_cmd" to="r_f_wheel_cmd"/>
+      <rosparam param="port">/dev/ttyACM1</rosparam>
+ </node>
+ <node name="r_back_motor_cmd" pkg="target_motor" type="left_front_node.py" output="screen">
+      <remap from="lwheel" to="r_b_wheel"/>
+      <remap from="left_wheel_cmd" to="r_b_wheel_cmd"/>
+      <rosparam param="port">/dev/ttyACM3</rosparam>
+ </node>
+
+<node name="r_front_pid_velocity" pkg="pid_controller" type="pid_velocity.py" output="screen">
+      <remap from="wheel" to="r_f_wheel"/>
+      <remap from="motor_cmd" to="r_f_wheel_cmd"/>
+      <remap from="wheel_vtarget" to="r_f_wheel_vtarget"/>
+      <remap from="wheel_vel" to="r_f_wheel_vel"/>
+    
+      <rosparam param="Kp">420</rosparam>
+      <rosparam param="Ki">0</rosparam>
+      <rosparam param="Kd">0</rosparam>
+      <rosparam param="rate">30</rosparam>
+      <rosparam param="timeout_ticks">4</rosparam>
+      <rosparam param="rolling_pts">5</rosparam>
+</node>
+ <node name="l_front_pid_velocity" pkg="pid_controller" type="pid_velocity.py" output="screen">
+      <remap from="wheel" to="l_f_wheel"/>
+      <remap from="motor_cmd" to="l_f_wheel_cmd"/>
+      <remap from="wheel_vtarget" to="l_f_wheel_vtarget"/>
+      <remap from="wheel_vel" to="l_f_wheel_vel"/>
+      <rosparam param="Kp">400</rosparam>
+      <rosparam param="Ki">0</rosparam>
+      <rosparam param="Kd">0</rosparam>
+      <rosparam param="rate">30</rosparam>
+      <rosparam param="timeout_ticks">4</rosparam>
+      <rosparam param="rolling_pts">5</rosparam>
+ </node>
+
+  <node name="r_back_pid_velocity" pkg="pid_controller" type="pid_velocity.py" output="screen">
+      <remap from="wheel" to="r_b_wheel"/>
+      <remap from="motor_cmd" to="r_b_wheel_cmd"/>
+      <remap from="wheel_vtarget" to="r_b_wheel_vtarget"/>
+      <remap from="wheel_vel" to="r_b_wheel_vel"/>
+    
+      <rosparam param="Kp">400</rosparam>
+      <rosparam param="Ki">0</rosparam>
+      <rosparam param="Kd">0</rosparam>
+      <rosparam param="rate">30</rosparam>
+      <rosparam param="timeout_ticks">4</rosparam>
+      <rosparam param="rolling_pts">5</rosparam>
+</node>
+  <node name="l_back_pid_velocity" pkg="pid_controller" type="pid_velocity.py" output="screen">
+      <remap from="wheel" to="l_b_wheel"/>
+      <remap from="motor_cmd" to="l_b_wheel_cmd"/>
+      <remap from="wheel_vtarget" to="l_b_wheel_vtarget"/>
+      <remap from="wheel_vel" to="l_b_wheel_vel"/>
+      <rosparam param="Kp">400</rosparam>
+      <rosparam param="Ki">0</rosparam>
+      <rosparam param="Kd">0</rosparam>
+      <rosparam param="rate">30</rosparam>
+      <rosparam param="timeout_ticks">4</rosparam>
+      <rosparam param="rolling_pts">5</rosparam>
+ </node> 
+</launch>
